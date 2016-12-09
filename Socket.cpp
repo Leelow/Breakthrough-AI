@@ -4,11 +4,11 @@
 void Socket::onWhiteMove(Position from, Position to) {
 	emit("debug", "[HUMAN] White move from (" + to_string(from.column) + ", " + to_string(from.row) + ") to (" + to_string(to.column) + ", " + to_string(to.row) + ")");
 	
-	// Update white pawn
+	// Update white pawn when the human moves it
 	Pawn wP = board.getPawn(from.column, from.row);
 	board.movePawn(wP, to.column, to.row);
 
-	// Move black pawn
+	// Move black pawn randomly (without respecting the rules)
 	Pawn bP = board.getRandomPawn(BLACK_PAWN);
 	Case c = board.getRandomEmptyCase();
 	board.movePawn(bP, c.column, c.row);
