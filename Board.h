@@ -30,9 +30,9 @@ class Board
 public:
 	Board();
 	Pawn getPawn(int column, int row);
+	vector<Case> getAvailableMoves(Pawn p);
+	Case getRandomMove(Pawn p);
 	Pawn getRandomPawn(int color);
-	Case getRandomCase();
-	Case getRandomEmptyCase();
 	Pawn movePawn(Pawn p, int column, int row);
 	string toString();
 };

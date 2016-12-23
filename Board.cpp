@@ -21,6 +21,28 @@ Pawn Board::getPawn(int column, int row) {
 	return{ column, row, cases[row][column] };
 }
 
+vector<Case> Board::getAvailableMoves(Pawn p) {
+	vector<Case> moves = vector<Case>();
+
+	if (p.color == BLACK_PAWN) {
+		if (p.column > 0 && cases[p.row + 1][p.column - 1] != BLACK_PAWN) moves.push_back({ p.column - 1, p.row + 1 });
+		if (cases[p.row + 1][p.column] == EMPTY_CASE) moves.push_back({ p.column, p.row + 1 });
+		if (p.column < BOARD_SIZE - 1 && cases[p.row + 1][p.column + 1] != BLACK_PAWN) moves.push_back({ p.column + 1, p.row + 1 });
+	}
+	else {
+		if (p.column > 0 && cases[p.row - 1][p.column - 1] != WHITE_PAWN) moves.push_back({ p.column - 1, p.row - 1 });
+		if (cases[p.row - 1][p.column] == EMPTY_CASE) moves.push_back({ p.column, p.row - 1 });
+		if (p.column < BOARD_SIZE - 1 && cases[p.row - 1][p.column + 1] != WHITE_PAWN) moves.push_back({ p.column + 1, p.row - 1 });
+	}
+
+	return moves;
+}
+
+Case Board::getRandomMove(Pawn p) {
+	vector<Case> moves = getAvailableMoves(p);
+	return moves[rand() % moves.size()];
+}
+
 Pawn Board::getRandomPawn(int color) {
 	Pawn p;
 	bool found = false;
@@ -31,18 +53,6 @@ Pawn Board::getRandomPawn(int color) {
 	}
 	p.color = color;
 	return p;
-}
-
-Case Board::getRandomCase() {
-	return { rand() % BOARD_SIZE , rand() % BOARD_SIZE };
-}
-
-Case Board::getRandomEmptyCase() {
-	Case c;
-	do {
-		c = getRandomCase();
-	} while (cases[c.row][c.column] != EMPTY_CASE);
-	return c;
 }
 
 Pawn Board::movePawn(Pawn p, int column, int row) {
