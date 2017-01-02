@@ -6,6 +6,9 @@ using namespace std;
 
 int main()
 {
+
+	srand(time(NULL));
+
 	string input;
 	Board board;
 	Socket socket(board);

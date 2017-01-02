@@ -8,13 +8,22 @@ void Socket::onWhiteMove(Position from, Position to) {
 	Pawn wP = board.getPawn(from.column, from.row);
 	board.movePawn(wP, to.column, to.row);
 
-	// Get a random black pawn
-	Pawn bP = board.getRandomPawn(BLACK_PAWN);
-
+	
 	// Move randomly
-	Case c = board.getRandomMove(bP);
+	Pawn bP;
+	vector<Case> availableMoves;
+	do {
+
+		// Get a random black pawn
+		bP = board.getRandomPawn(BLACK_PAWN);
+
+		// Get available moves
+		availableMoves = board.getAvailableMoves(bP);
+
+	} while (availableMoves.size() == 0);
+
+	Case c = availableMoves[rand() % availableMoves.size()];
 	board.movePawn(bP, c.column, c.row);
-	emit("debug", "lol");
 	emitBlackMove(bP.column, bP.row, c.column, c.row);
 	emit("board", board.toString());
 }

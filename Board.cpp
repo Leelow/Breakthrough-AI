@@ -38,11 +38,6 @@ vector<Case> Board::getAvailableMoves(Pawn p) {
 	return moves;
 }
 
-Case Board::getRandomMove(Pawn p) {
-	vector<Case> moves = getAvailableMoves(p);
-	return moves[rand() % moves.size()];
-}
-
 Pawn Board::getRandomPawn(int color) {
 	Pawn p;
 	bool found = false;
